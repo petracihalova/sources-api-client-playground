@@ -1,0 +1,13 @@
+---
+package: main
+generate:
+  models: true
+  client: true
+output: client.gen.go
+compatibility:
+  old-enum-conflicts: true # generator issue: redeclaration of EndpointAvailabilityStatus
+output-options:
+  include-tags:
+    - sources
+  exclude-schemas:
+    - BulkCreateResponse # generator issue: redeclaration
