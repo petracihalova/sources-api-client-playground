@@ -734,7 +734,9 @@ type SourcesCollection struct {
 }
 
 // QueryFilter defines model for QueryFilter.
-type QueryFilter = string
+type QueryFilter struct {
+	AdditionalProperties map[string]string `json:"-"`
+}
 
 // QueryLimit defines model for QueryLimit.
 type QueryLimit = int
@@ -754,6 +756,9 @@ type NotFound = ErrorNotFound
 // BulkCreateJSONBody defines parameters for BulkCreate.
 type BulkCreateJSONBody = BulkCreatePayload
 
+// ListSourcesParams_Filter defines parameters for ListSources.
+type ListSourcesParams_Filter QueryFilter
+
 // ListSourcesParams defines parameters for ListSources.
 type ListSourcesParams struct {
 	// The numbers of items to return per page.
@@ -763,7 +768,7 @@ type ListSourcesParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *ListSourcesParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -775,6 +780,9 @@ type CreateSourceJSONBody = SourceCreate
 // UpdateSourceJSONBody defines parameters for UpdateSource.
 type UpdateSourceJSONBody = SourceEdit
 
+// ListSourceApplicationTypesParams_Filter defines parameters for ListSourceApplicationTypes.
+type ListSourceApplicationTypesParams_Filter QueryFilter
+
 // ListSourceApplicationTypesParams defines parameters for ListSourceApplicationTypes.
 type ListSourceApplicationTypesParams struct {
 	// The numbers of items to return per page.
@@ -784,11 +792,14 @@ type ListSourceApplicationTypesParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *ListSourceApplicationTypesParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 }
+
+// ListSourceApplicationsParams_Filter defines parameters for ListSourceApplications.
+type ListSourceApplicationsParams_Filter QueryFilter
 
 // ListSourceApplicationsParams defines parameters for ListSourceApplications.
 type ListSourceApplicationsParams struct {
@@ -799,11 +810,14 @@ type ListSourceApplicationsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *ListSourceApplicationsParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 }
+
+// ListSourceAuthenticationsParams_Filter defines parameters for ListSourceAuthentications.
+type ListSourceAuthenticationsParams_Filter QueryFilter
 
 // ListSourceAuthenticationsParams defines parameters for ListSourceAuthentications.
 type ListSourceAuthenticationsParams struct {
@@ -814,11 +828,14 @@ type ListSourceAuthenticationsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *ListSourceAuthenticationsParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 }
+
+// ListSourceEndpointsParams_Filter defines parameters for ListSourceEndpoints.
+type ListSourceEndpointsParams_Filter QueryFilter
 
 // ListSourceEndpointsParams defines parameters for ListSourceEndpoints.
 type ListSourceEndpointsParams struct {
@@ -829,11 +846,14 @@ type ListSourceEndpointsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *ListSourceEndpointsParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 }
+
+// GetSourcesRhcConnectionParams_Filter defines parameters for GetSourcesRhcConnection.
+type GetSourcesRhcConnectionParams_Filter QueryFilter
 
 // GetSourcesRhcConnectionParams defines parameters for GetSourcesRhcConnection.
 type GetSourcesRhcConnectionParams struct {
@@ -844,7 +864,7 @@ type GetSourcesRhcConnectionParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *GetSourcesRhcConnectionParams_Filter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -858,6 +878,377 @@ type CreateSourceJSONRequestBody = CreateSourceJSONBody
 
 // UpdateSourceJSONRequestBody defines body for UpdateSource for application/json ContentType.
 type UpdateSourceJSONRequestBody = UpdateSourceJSONBody
+
+// Getter for additional properties for ListSourcesParams_Filter. Returns the specified
+// element and whether it was found
+func (a ListSourcesParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ListSourcesParams_Filter
+func (a *ListSourcesParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ListSourcesParams_Filter to handle AdditionalProperties
+func (a *ListSourcesParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ListSourcesParams_Filter to handle AdditionalProperties
+func (a ListSourcesParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for ListSourceApplicationTypesParams_Filter. Returns the specified
+// element and whether it was found
+func (a ListSourceApplicationTypesParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ListSourceApplicationTypesParams_Filter
+func (a *ListSourceApplicationTypesParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ListSourceApplicationTypesParams_Filter to handle AdditionalProperties
+func (a *ListSourceApplicationTypesParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ListSourceApplicationTypesParams_Filter to handle AdditionalProperties
+func (a ListSourceApplicationTypesParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for ListSourceApplicationsParams_Filter. Returns the specified
+// element and whether it was found
+func (a ListSourceApplicationsParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ListSourceApplicationsParams_Filter
+func (a *ListSourceApplicationsParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ListSourceApplicationsParams_Filter to handle AdditionalProperties
+func (a *ListSourceApplicationsParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ListSourceApplicationsParams_Filter to handle AdditionalProperties
+func (a ListSourceApplicationsParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for ListSourceAuthenticationsParams_Filter. Returns the specified
+// element and whether it was found
+func (a ListSourceAuthenticationsParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ListSourceAuthenticationsParams_Filter
+func (a *ListSourceAuthenticationsParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ListSourceAuthenticationsParams_Filter to handle AdditionalProperties
+func (a *ListSourceAuthenticationsParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ListSourceAuthenticationsParams_Filter to handle AdditionalProperties
+func (a ListSourceAuthenticationsParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for ListSourceEndpointsParams_Filter. Returns the specified
+// element and whether it was found
+func (a ListSourceEndpointsParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ListSourceEndpointsParams_Filter
+func (a *ListSourceEndpointsParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ListSourceEndpointsParams_Filter to handle AdditionalProperties
+func (a *ListSourceEndpointsParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ListSourceEndpointsParams_Filter to handle AdditionalProperties
+func (a ListSourceEndpointsParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetSourcesRhcConnectionParams_Filter. Returns the specified
+// element and whether it was found
+func (a GetSourcesRhcConnectionParams_Filter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetSourcesRhcConnectionParams_Filter
+func (a *GetSourcesRhcConnectionParams_Filter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetSourcesRhcConnectionParams_Filter to handle AdditionalProperties
+func (a *GetSourcesRhcConnectionParams_Filter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetSourcesRhcConnectionParams_Filter to handle AdditionalProperties
+func (a GetSourcesRhcConnectionParams_Filter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for QueryFilter. Returns the specified
+// element and whether it was found
+func (a QueryFilter) Get(fieldName string) (value string, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for QueryFilter
+func (a *QueryFilter) Set(fieldName string, value string) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]string)
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for QueryFilter to handle AdditionalProperties
+func (a *QueryFilter) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]string)
+		for fieldName, fieldBuf := range object {
+			var fieldVal string
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for QueryFilter to handle AdditionalProperties
+func (a QueryFilter) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -1280,7 +1671,7 @@ func NewListSourcesRequest(server string, params *ListSourcesParams) (*http.Requ
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1537,7 +1928,7 @@ func NewListSourceApplicationTypesRequest(server string, id ID, params *ListSour
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1639,7 +2030,7 @@ func NewListSourceApplicationsRequest(server string, id ID, params *ListSourceAp
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1741,7 +2132,7 @@ func NewListSourceAuthenticationsRequest(server string, id ID, params *ListSourc
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1877,7 +2268,7 @@ func NewListSourceEndpointsRequest(server string, id ID, params *ListSourceEndpo
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -2013,7 +2404,7 @@ func NewGetSourcesRhcConnectionRequest(server string, id ID, params *GetSourcesR
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
