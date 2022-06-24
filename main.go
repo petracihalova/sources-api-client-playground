@@ -55,9 +55,9 @@ func main() {
 		log.Print("count not equal to 14")
 	}
 
-	// Add filter - same way as has it the provisioning team
+	// Add filter
 	name := "ibm"
-	filter := QueryFilter("[source_type][name]=" + name)
+	filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": name}}
 
 	// List Sources with filter
 	response, err = client.ListSourcesWithResponse(ctx, &ListSourcesParams{Filter: &filter}, AddIdentityHeader)
