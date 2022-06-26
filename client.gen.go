@@ -734,7 +734,7 @@ type SourcesCollection struct {
 }
 
 // QueryFilter defines model for QueryFilter.
-type QueryFilter = string
+type QueryFilter = []string
 
 // QueryLimit defines model for QueryLimit.
 type QueryLimit = int
