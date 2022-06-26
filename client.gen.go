@@ -734,7 +734,12 @@ type SourcesCollection struct {
 }
 
 // QueryFilter defines model for QueryFilter.
-type QueryFilter = string
+type QueryFilter struct {
+	Field       *string `json:"field,omitempty"`
+	Operation   *string `json:"operation,omitempty"`
+	Subresource *string `json:"subresource,omitempty"`
+	Value       *string `json:"value,omitempty"`
+}
 
 // QueryLimit defines model for QueryLimit.
 type QueryLimit = int
@@ -763,7 +768,7 @@ type ListSourcesParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -784,7 +789,7 @@ type ListSourceApplicationTypesParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -799,7 +804,7 @@ type ListSourceApplicationsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -814,7 +819,7 @@ type ListSourceAuthenticationsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -829,7 +834,7 @@ type ListSourceEndpointsParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -844,7 +849,7 @@ type GetSourcesRhcConnectionParams struct {
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	Filter *QueryFilter `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -1280,7 +1285,7 @@ func NewListSourcesRequest(server string, params *ListSourcesParams) (*http.Requ
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1537,7 +1542,7 @@ func NewListSourceApplicationTypesRequest(server string, id ID, params *ListSour
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1639,7 +1644,7 @@ func NewListSourceApplicationsRequest(server string, id ID, params *ListSourceAp
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1741,7 +1746,7 @@ func NewListSourceAuthenticationsRequest(server string, id ID, params *ListSourc
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1877,7 +1882,7 @@ func NewListSourceEndpointsRequest(server string, id ID, params *ListSourceEndpo
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -2013,7 +2018,7 @@ func NewGetSourcesRhcConnectionRequest(server string, id ID, params *GetSourcesR
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err

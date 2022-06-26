@@ -55,9 +55,11 @@ func main() {
 		log.Print("count not equal to 14")
 	}
 
-	// Add filter - same way as has it the provisioning team
-	name := "ibm"
-	filter := QueryFilter("[source_type][name]=" + name)
+	// Add filter
+	subresource := "source_type"
+	field := "name"
+	value := "ibm"
+	filter := QueryFilter{Subresource: &subresource, Field: &field, Value: &value}
 
 	// List Sources with filter
 	response, err = client.ListSourcesWithResponse(ctx, &ListSourcesParams{Filter: &filter}, AddIdentityHeader)
@@ -80,4 +82,3 @@ func AddIdentityHeader(ctx context.Context, req *http.Request) error {
 	req.Header.Set("x-rh-identity", xHrIdentity)
 	return nil
 }
-
