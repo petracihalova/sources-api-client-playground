@@ -2101,10 +2101,25 @@
       "QueryFilter": {
         "in": "query",
         "name": "filter",
+        "style": "deepObject",
         "description": "Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]=\"value\"`.\n",
         "example": "filter[name][eq]=\"My shiny source\"\n",
         "schema": {
-          "type": "string"
+          "type": "object",
+          "properties": {
+            "subresource": {
+              "type": "string"
+            },
+            "field": {
+              "type": "string"
+            },
+            "operation": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
         }
       },
       "QueryLimit": {
