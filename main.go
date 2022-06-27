@@ -56,8 +56,23 @@ func main() {
 	}
 
 	// Add filter - same way as has it the provisioning team
+	type SourceType struct {
+		Category    *string `json:"category,omitempty"`
+		Id          *int    `json:"id,omitempty"`
+		Name        *string `json:"name,omitempty"`
+		ProductName *string `json:"product_name,omitempty"`
+		Vendor      *string `json:"vendor,omitempty"`
+	}
+
 	name := "ibm"
-	filter := QueryFilter("[source_type][name]=" + name)
+	a := SourceType{Name: &name}
+	filter := QueryFilterSourceType{SourceType: (*struct {
+		Category    *string `json:"category,omitempty"`
+		Id          *int    `json:"id,omitempty"`
+		Name        *string `json:"name,omitempty"`
+		ProductName *string `json:"product_name,omitempty"`
+		Vendor      *string `json:"vendor,omitempty"`
+	})(&a)}
 
 	// List Sources with filter
 	response, err = client.ListSourcesWithResponse(ctx, &ListSourcesParams{Filter: &filter}, AddIdentityHeader)
