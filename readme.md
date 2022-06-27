@@ -107,6 +107,7 @@ Structure of filter in open api spec:
 
 ## branch DEEP OBJECT 2
 - used deepObject in open api spec
+- the names of fields are not specified (additional properties with type string creates in generated client the struct that needs ```map[string]string```)
 ```
 "QueryFilter": {
     "in": "query",
@@ -122,9 +123,11 @@ Structure of filter in open api spec:
     }
 },
 ```
-- we can define filter as ```map[string][string]``` with:
+- in our handlers we can define filter as ```map[string][string]``` with:
     - key: ```[source_type][name]```
     - value: ```ibm```
+
+example:
 ```
 filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": "ibm"}}
 ```
@@ -134,3 +137,60 @@ filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": "ibm
    - key: ```[[source_type][name]]```
    - value: ```ibm```
 - so there is one more [] around key but method ```FindAllStringSubmatch()``` used in ```middleware/filtering.go``` can process it correctly
+
+
+## branch DEEP OBJECT 3
+- used deepObject in open api spec
+- I created special filter for sources (QueryFilterSourceType) and applications (QueryFilterApplicationType) and I set all possible fields we can use for filtering (like "name", "id", "vendor" ....)
+
+example
+```
+"QueryFilterSourceType": {
+  "in": "query",
+  "name": "filter",
+  "style": "deepObject",
+  "description": "Filter the sources with source type. The format of the filters is as follows: `filter[source_type][field][operation]=\"value\"`.\n",
+  "example": "filter[source_type][name][eq]=\"source type name\"\n",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "source_type": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "vendor": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+},
+```
+
+- this creates in generated client the struct ```QueryFilterSourceType```
+```
+// QueryFilterSourceType defines model for QueryFilterSourceType.
+type QueryFilterSourceType struct {
+	SourceType *struct {
+		Category    *string `json:"category,omitempty"`
+		Id          *int    `json:"id,omitempty"`
+		Name        *string `json:"name,omitempty"`
+		ProductName *string `json:"product_name,omitempty"`
+		Vendor      *string `json:"vendor,omitempty"`
+	} `json:"source_type,omitempty"`
+}
+```
+
+- we can use it to define our desired filter 
