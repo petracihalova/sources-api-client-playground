@@ -325,7 +325,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterSourceType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -415,7 +415,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterApplicationType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -1296,7 +1296,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterSourceType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -1463,7 +1463,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterSourceType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -1508,7 +1508,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterSourceType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -1739,7 +1739,7 @@
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
-            "$ref": "#/components/parameters/QueryFilter"
+            "$ref": "#/components/parameters/QueryFilterApplicationType"
           },
           {
             "$ref": "#/components/parameters/QuerySortBy"
@@ -2105,6 +2105,67 @@
         "example": "filter[name][eq]=\"My shiny source\"\n",
         "schema": {
           "type": "string"
+        }
+      },
+      "QueryFilterSourceType": {
+        "in": "query",
+        "name": "filter",
+        "style": "deepObject",
+        "description": "Filter the sources with source type. The format of the filters is as follows: `filter[source_type][field][operation]=\"value\"`.\n",
+        "example": "filter[source_type][name][eq]=\"source type name\"\n",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "source_type": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "product_name": {
+                  "type": "string"
+                },
+                "vendor": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QueryFilterApplicationType": {
+        "in": "query",
+        "name": "filter",
+        "style": "deepObject",
+        "description": "Filter the applications with application type. The format of the filters is as follows: `filter[application_type][field][operation]=\"value\"`.\n",
+        "example": "filter[application_type][name][eq]=\"source type name\"\n",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "source_type": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "display_name": {
+                  "type": "string"
+                },
+                "vendor": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       },
       "QueryLimit": {

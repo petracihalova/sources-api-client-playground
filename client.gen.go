@@ -736,6 +736,27 @@ type SourcesCollection struct {
 // QueryFilter defines model for QueryFilter.
 type QueryFilter = string
 
+// QueryFilterApplicationType defines model for QueryFilterApplicationType.
+type QueryFilterApplicationType struct {
+	SourceType *struct {
+		DisplayName *string `json:"display_name,omitempty"`
+		Id          *int    `json:"id,omitempty"`
+		Name        *string `json:"name,omitempty"`
+		Vendor      *string `json:"vendor,omitempty"`
+	} `json:"source_type,omitempty"`
+}
+
+// QueryFilterSourceType defines model for QueryFilterSourceType.
+type QueryFilterSourceType struct {
+	SourceType *struct {
+		Category    *string `json:"category,omitempty"`
+		Id          *int    `json:"id,omitempty"`
+		Name        *string `json:"name,omitempty"`
+		ProductName *string `json:"product_name,omitempty"`
+		Vendor      *string `json:"vendor,omitempty"`
+	} `json:"source_type,omitempty"`
+}
+
 // QueryLimit defines model for QueryLimit.
 type QueryLimit = int
 
@@ -762,8 +783,8 @@ type ListSourcesParams struct {
 	// The number of items to skip before starting to collect the result set.
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
-	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	// Filter the sources with source type. The format of the filters is as follows: `filter[source_type][field][operation]="value"`.
+	Filter *QueryFilterSourceType `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -798,8 +819,8 @@ type ListSourceApplicationsParams struct {
 	// The number of items to skip before starting to collect the result set.
 	Offset *QueryOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
-	// Filter for querying collections. The format of the filters is as follows: `filter[subresource][field][operation]="value"`.
-	Filter *QueryFilter `form:"filter,omitempty" json:"filter,omitempty"`
+	// Filter the applications with application type. The format of the filters is as follows: `filter[application_type][field][operation]="value"`.
+	Filter *QueryFilterApplicationType `json:"filter,omitempty"`
 
 	// The list of attribute and order to sort the result set by.
 	SortBy *QuerySortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -1280,7 +1301,7 @@ func NewListSourcesRequest(server string, params *ListSourcesParams) (*http.Requ
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
@@ -1639,7 +1660,7 @@ func NewListSourceApplicationsRequest(server string, id ID, params *ListSourceAp
 
 	if params.Filter != nil {
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
+		if queryFrag, err := runtime.StyleParamWithLocation("deepObject", true, "filter", runtime.ParamLocationQuery, *params.Filter); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 			return nil, err
