@@ -132,7 +132,7 @@ example:
 filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": "ibm"}}
 ```
 
-### RESULTS => WORKING + needs changes only in "QueryFilter" definition (on Sources side)
+### RESULTS => WORKING + needs changes only in "QueryFilter" definition (not needed to change SOURCES API itself)
 - generated API client creates query parameter with:
    - key: ```[[source_type][name]]```
    - value: ```ibm```
@@ -141,7 +141,11 @@ filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": "ibm
 
 ## branch DEEP OBJECT 3
 - used deepObject in open api spec
+<<<<<<< HEAD
 - I created special filter for sources (QueryFilterSourceType) and applications (QueryFilterApplicationType) and I set all possible fields we can use for filtering (like "name", "id", "vendor" ....)
+=======
+- created special filter for sources (QueryFilterSourceType) and applications (QueryFilterApplicationType) and set all possible fields we can use for filtering (like "name", "id", "vendor" ....)
+>>>>>>> readme
 
 example
 ```
@@ -193,4 +197,9 @@ type QueryFilterSourceType struct {
 }
 ```
 
-- we can use it to define our desired filter 
+- we can use it to define our desired filter => see example in main.go (in branch deep_object_3)
+
+### RESULTS => WORKING + needs changes only in "QueryFilter" definition (not needed to change SOURCES API itself)
+- generated API client creates query parameter with:
+  - key: ```[source_type][name]```
+  - value: ```ibm```
