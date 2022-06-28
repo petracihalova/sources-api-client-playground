@@ -141,11 +141,7 @@ filter := ListSourcesParams_Filter{map[string]string{"[source_type][name]": "ibm
 
 ## branch DEEP OBJECT 3
 - used deepObject in open api spec
-<<<<<<< HEAD
-- I created special filter for sources (QueryFilterSourceType) and applications (QueryFilterApplicationType) and I set all possible fields we can use for filtering (like "name", "id", "vendor" ....)
-=======
 - created special filter for sources (QueryFilterSourceType) and applications (QueryFilterApplicationType) and set all possible fields we can use for filtering (like "name", "id", "vendor" ....)
->>>>>>> readme
 
 example
 ```
